@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="<?=get_css('bootstrap.min.css')?>" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="<?=get_css('styles.css')?>" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="<?=base_url('assets/font-awesome/css/all.css')?>">
-
-    <title>Hello, world!</title>
-
     <style type="text/css">
       body{
-        background: #EDF8F0 url(<?=get_image('bg.png')?>) top center repeat-x fixed;
+        background: #EDF8F0 url("http://localhost/perizinan/assets/images/bg.png") top center repeat-x fixed;
         color: #033f1c;
       }
       .logo {
@@ -20,6 +18,7 @@
       }
       .header {
         margin: 50px auto;
+        margin-top: 8%;
         text-align: center;
         max-width: 650px;
       }
@@ -57,7 +56,7 @@
       }
       a { color: inherit; }
     </style>
-
+    <title>Perizinan Disnaker DIY</title>
   </head>
   <body>
     <div class="container">
@@ -76,7 +75,7 @@
           <div class="col">
             <i class="far fa-file-alt"></i>
             <div class="detail">
-              <a href="registrasi"><h5>Registrasi Akun</h5></a>
+              <a href="register"><h5>Registrasi Akun</h5></a>
               <p>Layanan ini digunakan untuk pembuatan akun</p>
             </div>
           </div>

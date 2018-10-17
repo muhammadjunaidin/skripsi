@@ -50,7 +50,7 @@
 	<body>
 		<div class="container">
 			<div class="header">
-				<img class="logo" src="<?=get_image('logo-disnaker.png')?>">
+				<a href="<?=base_url()?>"><img class="logo" src="<?=get_image('logo-disnaker.png')?>"></a>
 				<div class="header-title">
 					<h2>Pelayanan perizinan<br> Disnaker DIY</h2>
 				</div>

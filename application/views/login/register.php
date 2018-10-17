@@ -59,41 +59,57 @@
 				<div class="card bg-transparent border-success">
 					<div class="card-header">Form Registrasi</div>
 					<div class="card-body">
-						<form>
+						<?php if (validation_errors()) : ?>
+							<div class="alert alert-danger" role="alert">
+								<?= validation_errors() ?>
+							</div>
+						<?php endif; ?>
+						<?php if (isset($status) && $status === 'sukses') : ?>
+							<div class="alert alert-success" role="alert">
+								<?= $message ?>
+							</div>
+						<?php elseif ( isset($status) && $status === 'gagal'): ?>
+							<div class="alert alert-danger" role="alert">
+								<?= $message ?>
+							</div>
+						<?php endif; ?>
+
+					
+						<form method="POST">
 							<div class="form-group row">
 								<label for="inputNIK" class="col-sm-2 col-form-label">NIK</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="nik" id="inputNIK" placeholder="NIK">
+									<input type="text" class="form-control" name="nik" value="<?=isset($nik) ? $nik : ''?>" id="inputNIK" placeholder="NIK" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputNamaLengkap" class="col-sm-2 col-form-label">Nama Lengkap</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="nama_lengkap" id="inputNamaLengkap" placeholder="Nama Lengkap">
+									<input type="text" class="form-control" name="nama_lengkap" value="<?=isset($nama_lengkap) ? $nama_lengkap : ''?>" id="inputNamaLengkap" placeholder="Nama Lengkap" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
 								<div class="col-sm-10">
-									<input type="email" class="form-control" name="nik" id="inputEmail" placeholder="Email">
+									<input type="email" class="form-control" name="email" value="<?=isset($email) ? $email : ''?>" id="inputEmail" placeholder="Email" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputNoTlp" class="col-sm-2 col-form-label">No. Handphone</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="no_tlp" id="inputNoTlp" placeholder="No. Handphone">
+									<input type="text" class="form-control" name="no_tlp" value="<?=isset($no_tlp) ? $no_tlp : ''?>" id="inputNoTlp" placeholder="No. Handphone" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputAlamat" class="col-sm-2 col-form-label">Alamat</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="alamat" id="inputAlamat" placeholder="Alamat">
+									<input type="text" class="form-control" name="alamat" value="<?=isset($alamat) ? $alamat : ''?>" id="inputAlamat" placeholder="Alamat" required>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputWarga" class="col-sm-2 col-form-label">Kewarganegaraan</label>
 								<div class="col-sm-10">
-									<select class="form-control" id="inputWarga">
+									<select class="form-control" id="inputWarga" name="kewarganegaraan" value="<?=isset($kewarganegaraan) ? $kewarganegaraan : ''?>">
 										<option value="wni">WNI</option>
 										<option value="wna">WNA</option>
 									</select>
@@ -102,19 +118,19 @@
 							<div class="form-group row">
 								<label for="inputPekerjaan" class="col-sm-2 col-form-label">Pekerjaan</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="inputPekerjaan" placeholder="Pekerjaan">
+									<input type="text" class="form-control" name="pekerjaan" value="<?=isset($pekerjaan) ? $pekerjaan : ''?>" id="inputPekerjaan" placeholder="Pekerjaan">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputJabatan" class="col-sm-2 col-form-label">Jabatan</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="inputJabatan" placeholder="Jabatan">
+									<input type="text" class="form-control" id="inputJabatan" name="jabatan" value="<?=isset($jabatan) ? $jabatan : ''?>" placeholder="Jabatan">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
 								<div class="col-sm-10">
-									<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+									<input type="password" class="form-control" id="inputPassword3" name="password" value="<?=isset($password) ? $password : ''?>" placeholder="Password" required>
 								</div>
 							</div>
 							<button type="submit" class="btn submit">Submit</button>

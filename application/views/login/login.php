@@ -48,9 +48,7 @@
 				border-radius: 50%;
 			}
 			.btn.btn-signin {
-				/*background-color: #4d90fe; */
-				background-color: rgb(104, 145, 162);
-				/* background-color: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+				background-color: #07602c;; 
 				padding: 0px;
 				font-weight: 700;
 				font-size: 14px;
@@ -76,10 +74,20 @@
 				<!-- <img class="profile-img-card" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" alt="" /> -->
 				<img id="profile-img" class="profile-img-card" src="<?=get_image('logo-disnaker.png')?>" />
 				<p id="profile-name" class="profile-name-card"></p>
-				<form class="form-signin">
+				<form class="form-signin" method="POST">
+					<?php if (validation_errors()) : ?>
+						<div class="alert alert-danger" role="alert">
+							<?= validation_errors() ?>
+						</div>
+					<?php endif; ?>
+					<?php if (isset($error) && $error) : ?>
+						<div class="alert alert-success" role="alert">
+							<?= $error ?>
+						</div>
+					<?php endif;?>
 					<span id="reauth-email" class="reauth-email"></span>
-					<input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-					<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+					<input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+					<input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
 					<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
 				</form>
 			</div>

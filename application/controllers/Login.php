@@ -5,13 +5,15 @@ class Login extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->load->library(array('session'));
 		$this->load->model('user_model');
 	}
 
 	public function index() {
 		// create the data object
 		$res = new stdClass();
+		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+			redirect('/');
+		}
 		
 		// load form helper and validation library
 		$this->load->helper('form');
@@ -49,7 +51,7 @@ class Login extends CI_Controller {
 				print_r($_SESSION);die();
 				
 			} else {
-				
+
 				// login failed
 				$res->error = 'Username atau password salah.';
 				
@@ -112,6 +114,6 @@ class Login extends CI_Controller {
 			redirect('/');
 		}
 	}
-	
+
 
 }

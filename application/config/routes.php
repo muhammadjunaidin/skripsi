@@ -56,3 +56,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route["register"] = "login/register";
 $route["login"] = "login/index";
 $route["logout"] = "login/logout";
+
+$route["izin-usaha"] = "perizinan/index";

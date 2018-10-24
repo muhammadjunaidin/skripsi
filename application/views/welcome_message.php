@@ -56,19 +56,19 @@
       }
       a { color: inherit; }
     </style>
-    <title>Perizinan Disnaker DIY</title>
+    <title>Perizinan Wilayah DIY</title>
   </head>
   <body>
     <div class="container">
       <div class="header">
         <img class="logo" src="<?=get_image('logo-disnaker.png')?>">
         <div class="header-title">
-          <h2>Pelayanan perizinan <br>Disnaker DIY</h2>
+          <h2>Pelayanan perizinan <br>Wilayah DIY</h2>
         </div>
       </div>
       <div class="content">
         <div class="intro">
-          <h3>Selamat datang, di Perizinan online Disnaker DIY</h3>
+          <h3>Selamat datang, di Perizinan online Wilayah DIY</h3>
           <h5>Sistem perizinan online ini di peruntukkan bagi pemohon yang ingin mengajukan permohonan perizinan secara online</h5>
         </div>
         <div class="feature row">
@@ -80,17 +80,22 @@
             </div>
           </div>
           <div class="col">
-            <i class="fas fa-search"></i>
+            <i class="fas fa-file-contract"></i>
             <div class="detail">
-              <a href="monitor"><h5>Monitoring Proses</h5></a>
+              <a href="izin-usaha"><h5>Perizinan</h5></a>
               <p>Layanan ini digunakan untuk memantau proses perizinan</p>
             </div>
           </div>
           <div class="col">
             <i class="fas fa-unlock-alt"></i>
             <div class="detail">
-              <a href="login"><h5>Login</h5></a>
-              <p>Layanan ini digunakan untuk masuk ke aplikasi</p>
+              <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+                <a href="logout"><h5>Logout</h5></a>
+                <p>Silahkan logout dari aplikasi</p>
+              <?php else: ?>
+                <a href="login"><h5>Login</h5></a>
+                <p>Layanan ini digunakan untuk masuk ke aplikasi</p>
+              <?php endif;?>
             </div>
           </div>
         </div>

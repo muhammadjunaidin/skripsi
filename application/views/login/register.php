@@ -45,14 +45,14 @@
 	    color: white;
       }
     </style>
-    <title>Perizinan Disnaker DIY</title>
+    <title>Perizinan Wilayah DIY</title>
   </head>
 	<body>
 		<div class="container">
 			<div class="header">
 				<a href="<?=base_url()?>"><img class="logo" src="<?=get_image('logo-disnaker.png')?>"></a>
 				<div class="header-title">
-					<h2>Pelayanan perizinan<br> Disnaker DIY</h2>
+					<h2>Pelayanan perizinan<br> Wilayah DIY</h2>
 				</div>
 			</div>
 			<div class="content">

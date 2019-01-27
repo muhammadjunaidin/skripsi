@@ -17,7 +17,7 @@
         max-width: 130px;
       }
       .header {
-      	margin: auto;
+        margin: 50px auto;
         text-align: center;
         max-width: 650px;
       }

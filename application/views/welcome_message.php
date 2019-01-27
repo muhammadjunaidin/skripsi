@@ -92,6 +92,7 @@
               <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
                 <a href="logout"><h5>Logout</h5></a>
                 <p>Silahkan logout dari aplikasi</p>
+                <p>Klik <a href="<?=base_url('admin/dashboard')?>"><b>disini</b></a> untuk masuk kedalam dashboard</p>
               <?php else: ?>
                 <a href="login"><h5>Login</h5></a>
                 <p>Layanan ini digunakan untuk masuk ke aplikasi</p>

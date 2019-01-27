@@ -26,7 +26,7 @@ class Login extends CI_Controller {
 		if ($this->form_validation->run() == false) {
 			
 			// validation not ok, send validation errors to the view
-			$this->load->view('login/login');
+			$this->load->view('homepage/login/login');
 			
 		} else {
 			
@@ -39,24 +39,72 @@ class Login extends CI_Controller {
 				$user_id = $this->user_model->get_user_id_from(['email'=>$email]);
 				$user    = $this->user_model->get_user($user_id);
 				
-				// set session user datas
-				$_SESSION['user_id']      = (int)$user->id;
-				$_SESSION['email']     = (string)$user->email;
-				$_SESSION['nik']     = (string)$user->nik;
-				$_SESSION['logged_in']    = (bool)true;
-				$_SESSION['is_admin']     = (bool)$this->user_model->check_access($user->akses);
+				// set session user data
+				$_SESSION['user_id']	= (int)$user->id;
+				$_SESSION['email']     	= (string)$user->email;
+				$_SESSION['nik']     	= (string)$user->nik;
+				$_SESSION['logged_in']	= (bool)true;
+				$_SESSION['is_admin']	= false;
 				
 				// user login ok
-				$this->load->view('login/login', $res);
-				print_r($_SESSION);die();
-				
+				redirect('admin/dashboard');
+				$this->load->view('homepage/login/login', $res);
 			} else {
-
 				// login failed
 				$res->error = 'Username atau password salah.';
-				
 				// send error to the view
-				$this->load->view('login/login', $res);
+				$this->load->view('homepage/login/login', $res);
+				
+			}
+			
+		}
+	}
+
+	public function admin() {
+		// create the data object
+		$res = new stdClass();
+		if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+			redirect('/');
+		}
+		
+		// load form helper and validation library
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		
+		// set validation rules
+		$this->form_validation->set_rules('email', 'email', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		
+		if ($this->form_validation->run() == false) {
+			
+			// validation not ok, send validation errors to the view
+			$this->load->view('homepage/login/login');
+			
+		} else {
+			
+			// set variables from the form
+			$email = $this->input->post('email');
+			$password = $this->input->post('password');
+			
+			if ($this->user_model->check_login_admin($email, $password)) {
+				
+				$admin_id = $this->user_model->get_admin_id_from(['email'=>$email]);
+				$admin    = $this->user_model->get_admin($admin_id);
+				
+				// set session user data
+				$_SESSION['user_id']	= (int)$admin->id;
+				$_SESSION['email']     	= (string)$admin->email;
+				$_SESSION['logged_in']	= (bool)true;
+				$_SESSION['is_admin']	= true;
+				
+				// user login ok
+				// $this->load->view('homepage/login/login', $res);
+				redirect('admin/dashboard');
+			} else {
+				// login failed
+				$res->error = 'Username atau password salah.';
+				// send error to the view
+				$this->load->view('homepage/login/login', $res);
 				
 			}
 			
@@ -85,20 +133,19 @@ class Login extends CI_Controller {
 		$data['pekerjaan'] = $this->input->post('pekerjaan');
 		$data['jabatan'] = $this->input->post('jabatan');
 		$data['password'] = $this->input->post('password');
-		$data['akses'] = 'member';
 
 		if ($this->form_validation->run() === false) {	
-			$this->load->view('login/register', $data);
+			$this->load->view('homepage/login/register', $data);
 		} else {
 			if( $this->user_model->create_user($data) ) {
 				$res->status = 'sukses';
-				$res->message = "Berhasil membuat user, silahkan login";
+				$res->message = 'Berhasil membuat user, silahkan login <a href="login"><b>disini</b></a>';
 			} else {
 				$res->status = 'gagal';
 				$res->message = 'Terjadi masalah ketika membuat akun, silahkan coba lagi';
 			}
 			// print_r($post_data);die();
-			$this->load->view('login/register', $res);
+			$this->load->view('homepage/login/register', $res);
 		}
 	}
 

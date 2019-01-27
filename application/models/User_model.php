@@ -39,8 +39,7 @@ class User_model extends CI_Model {
 			'kewarganegaraan' => $params['kewarganegaraan'],
 			'pekerjaan' => $params['pekerjaan'],
 			'jabatan' => $params['jabatan'],
-			'password' => $this->hash_password($params['password']),
-			'akses' => $params['akses']
+			'password' => $this->hash_password($params['password'])
 		);
 		
 		return $this->db->insert('users', $data);
@@ -66,6 +65,26 @@ class User_model extends CI_Model {
 	}
 	
 	/**
+	* check_login_admin function.
+	 * 
+	 * @access public
+	 * @param mixed $email
+	 * @param mixed $password
+	 * @return bool true on success, false on failure
+	 */
+	public function check_login_admin($email, $password) {
+		
+		$this->db->select('password');
+		$this->db->from('admin');
+		$this->db->where('email', $email);
+		$hash = $this->db->get()->row('password');
+		
+		return $this->verify_password_hash($password, $hash);
+		
+	}
+	
+
+	/**
 	 * get_user_id_from function.
 	 * 
 	 * @access public
@@ -88,9 +107,38 @@ class User_model extends CI_Model {
 	 * @param mixed $user_id
 	 * @return object the user object
 	 */
-	public function get_user($user_id) {
-		
+	public function get_user($user_id) {	
 		$this->db->from('users');
+		$this->db->where('id', $user_id);
+		return $this->db->get()->row();
+	}
+
+	/**
+	 * get_admin_id_from function.
+	 * 
+	 * @access public
+	 * @param array $params
+	 * @return int the user id
+	 */
+	public function get_admin_id_from($params) {
+		
+		$this->db->select('id');
+		$this->db->from('admin');
+		$this->db->where($params);
+		return $this->db->get()->row('id');
+		
+	}
+	
+	/**
+	 * get_admin function.
+	 * 
+	 * @access public
+	 * @param mixed $user_id
+	 * @return object the user object
+	 */
+	public function get_admin($user_id) {
+		
+		$this->db->from('admin');
 		$this->db->where('id', $user_id);
 		return $this->db->get()->row();
 		

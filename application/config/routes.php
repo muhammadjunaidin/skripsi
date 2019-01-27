@@ -57,4 +57,8 @@ $route["register"] = "login/register";
 $route["login"] = "login/index";
 $route["logout"] = "login/logout";
 
+$route["cronjob"] = "welcome/cronjob";
+
 $route["izin-usaha"] = "perizinan/index";
+$route["izin-usaha/(:any)"] = "perizinan/$1";
+$route["izin-usaha/(:any)/(:any)"] = "perizinan/$1/$2";

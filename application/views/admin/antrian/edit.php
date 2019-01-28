@@ -47,7 +47,7 @@
                     <label for="nama_usaha" class=" form-control-label">Nama Perusahaan</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <input type="text" id="nama_usaha" name="nama_perusahaan" placeholder="Masukkan nama perusahaan" class="form-control" value="<?=$izin->nama_usaha?>">
+                    <input type="text" id="nama_usaha" name="nama_perusahaan" placeholder="Masukkan nama perusahaan" class="form-control" value="<?=$izin->nama_usaha?>" <?=is_admin()?'disabled':''?>>
                     <input type="hidden" name="action" value="edit">
                     <input type="hidden" name="id" value="<?=$izin->id?>">
                     <input type="hidden" name="kode_antrian" value="<?=$izin->kode_antrian?>">
@@ -58,7 +58,7 @@
                     <label for="syarat" class=" form-control-label">Nomor Izin</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <input type="text" name="nomor_izin" placeholder="Masukkan nomor izin" class="form-control" value="<?=$izin->nomor_izin?>">
+                    <input type="text" name="nomor_izin" placeholder="Masukkan nomor izin" class="form-control" value="<?=$izin->nomor_izin?>" <?=is_admin()?'disabled':''?> >
                 </div>
             </div>
             <div class="row form-group">
@@ -66,7 +66,7 @@
                     <label for="syarat" class=" form-control-label">Nama Pemilik</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <input type="text" name="nama_pemilik" placeholder="Masukkan nama pemilik" class="form-control" value="<?=$izin->nama_pemilik?>">
+                    <input type="text" name="nama_pemilik" placeholder="Masukkan nama pemilik" class="form-control" value="<?=$izin->nama_pemilik?>"<?=is_admin()?'disabled':''?>>
                 </div>
             </div>
             <div class="row form-group">
@@ -74,7 +74,7 @@
                     <label for="syarat" class=" form-control-label">Alamat lengkap</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <input type="text" name="alamat" placeholder="Masukkan alamat lengkap" class="form-control" value="<?=$izin->alamat_usaha?>">
+                    <input type="text" name="alamat" placeholder="Masukkan alamat lengkap" class="form-control" value="<?=$izin->alamat_usaha?>" <?=is_admin()?'disabled':''?>>
                 </div>
             </div>
             <div class="row form-group">
@@ -82,7 +82,7 @@
                     <label for="nama_izin" class="form-control-label">Tanggal berdiri</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <input type="text" name="tanggal_berdiri" id="tanggal_berdiri" placeholder="Masukkan tanggal berdiri" class="form-control" value="<?=$izin->tanggal_berdiri?>">
+                    <input type="text" name="tanggal_berdiri" id="tanggal_berdiri" placeholder="Masukkan tanggal berdiri" class="form-control" value="<?=$izin->tanggal_berdiri?>" <?=is_admin()?'disabled':''?>>
                 </div>
             </div>
             <div class="row form-group">
@@ -90,7 +90,7 @@
                     <label for="prosedur" class=" form-control-label">Permohonan Izin</label>
                 </div>
                 <div class="col-12 col-md-9">
-                    <select name="jenis_usaha" class="form-control">
+                    <select name="jenis_usaha" class="form-control" <?=is_admin()?'disabled':''?>>
                         <?php foreach($jenis_usaha as $v) { ?>
                             <option value="<?=$v->id?>" <?=$v->id === $izin->id_izin_usaha ? 'selected': '';?>><?=$v->nama?></option>
                         <?php } ?>

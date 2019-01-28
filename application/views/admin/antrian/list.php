@@ -30,7 +30,9 @@
             <div class="card-header">
                 <strong class="card-title">List Antrian</strong>
                 <div style="float: right;">
+                    <?php if(!is_admin()){?>
                     <a href="<?=base_url('admin/tambah_antrian/')?>" class="btn btn-outline-success">Tambah</a>
+                    <?php }?>
                 </div>
             </div>
             <div class="card-body">

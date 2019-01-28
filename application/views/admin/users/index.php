@@ -28,7 +28,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <strong class="card-title">Tabel User</strong>
+                <strong class="card-title">Tabel Perusahaan</strong>
             </div>
             <div class="card-body">
                 <table class="table table-striped">

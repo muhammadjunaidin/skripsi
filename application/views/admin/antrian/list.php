@@ -47,14 +47,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1; foreach($lists as $pengajuan){?>
+                        <?php $i = 1; foreach($lists as $k => $pengajuan){?>
                         <tr>
                             <td><?=$pengajuan->kode_antrian?></td>
                             <td><?=$pengajuan->nama?></td>
                             <td><?=$pengajuan->created_at?></td>
                             <td><?=$pengajuan->status_terakhir ?></td>
                             <td>
-                                <a href="<?=base_url('admin/edit_antrian/').$pengajuan->id?>" class="btn btn-outline-primary">Edit</a>
+                                <?php
+                                    $hidden = false;
+                                    if(is_admin() && $pengajuan->status_terakhir === 'diproses' && $k !== 0 ) {
+                                        $hidden = true;
+                                    } else if (!is_admin() && $pengajuan->status_terakhir !== 'diproses') {
+                                        $hidden = true;
+                                    }
+                                ?>
+                                <a href="<?=base_url('admin/edit_antrian/').$pengajuan->id?>" class="btn btn-outline-primary <?= $hidden ? 'hidden':''?>">Edit</a>
                                 <a href="<?=base_url('admin/lihat_antrian/').$pengajuan->id?>" class="btn btn-outline-secondary">Lihat</a>
                                 <a href="<?=base_url('admin/hapus_antrian/').$pengajuan->id?>" class="btn btn-outline-danger">Hapus</a>
                             </td>

@@ -127,6 +127,8 @@ class Admin extends BaseController {
 		$where = [];
 		if(!parent::is_admin()) {
 			$where['user_id']= $userData['user_id'];
+		} else {
+			$where['status_terakhir'] = 'diproses';
 		}
 		$lists = $this->main_m->get_antrian($where);
 		parent::getView('admin/antrian/list', ['lists' => $lists]);
@@ -150,15 +152,16 @@ class Admin extends BaseController {
 		];
 
 		if($this->input->post('action') === 'edit') {
-			$data['status_terakhir'] = $this->input->post('status');
-			$data['id'] = $this->input->post('id');
-			$data['updated_at'] = date('Y-m-d H:m:s');
-			$data['tanggal_survey'] = $this->input->post('tanggal_survey');
-			$this->main_m->update('permohonan_izin', $data, ['id' => $data['id']]);
+			$permohonan_izin = $this->main_m->get_row('permohonan_izin', ['id' => $this->input->post('id')]);
+			$updateData['status_terakhir'] = $this->input->post('status');
+			$updateData['id'] = $this->input->post('id');
+			$updateData['updated_at'] = date('Y-m-d H:m:s');
+			$updateData['tanggal_survey'] = $this->input->post('tanggal_survey');
+			$this->main_m->update('permohonan_izin', $updateData, ['id' => $updateData['id']]);
 
 			$antrian = [
             	'kode_antrian' => $this->input->post('kode_antrian'),
-            	'id_permohonan_izin' => $data['id'],
+            	'id_permohonan_izin' => $this->input->post('id'),
             	'tanggal_pengajuan' => date('Y-m-d'),
             	'pesan' => $this->input->post('pesan'),
             	'status_permohonan' => $this->input->post('status'),
@@ -169,6 +172,8 @@ class Admin extends BaseController {
             
             $insert = $this->main_m->insert('antrian', $antrian);
 			if($insert) {
+				$user = $this->user_model->get_user($permohonan_izin->user_id);
+				// parent::sendEmail($user, $permohonan_izin->kode_antrian, $this->input->post('status'), $this->input->post('tanggal_survey'));
 				$this->session->set_flashdata('alert', array('message' => 'Berhasil update izin usaha','class' => 'success'));
             	redirect('admin/antrian'); 
 			}
@@ -220,13 +225,27 @@ class Admin extends BaseController {
 	public function edit_antrian($id = null) {
 		$jenis_usaha = $this->main_m->get('jenis_usaha', ['deleted_at' => null]);
 		$antrian = $this->main_m->get('permohonan_izin', ['id' => $id]);
+		$min_date = $this->main_m->get('permohonan_izin', null, 'tanggal_survey desc');
 		$log = $this->main_m->get_log($id);
-		parent::getView('admin/antrian/edit', ['izin' => $antrian[0], 'jenis_usaha' => $jenis_usaha, 'log' => $log]);
+		parent::getView('admin/antrian/edit', ['izin' => $antrian[0], 'jenis_usaha' => $jenis_usaha, 'log' => $log, 'min_date' => $min_date[0]->tanggal_survey]);
 	}
 	public function lihat_antrian($id = null) {
 		$jenis_usaha = $this->main_m->get('jenis_usaha', ['deleted_at' => null]);
 		$antrian = $this->main_m->get('permohonan_izin', ['id' => $id]);
 		$log = $this->main_m->get_log($id);
 		parent::getView('admin/antrian/detail', ['izin' => $antrian[0], 'jenis_usaha' => $jenis_usaha, 'log' => $log]);
+	}
+
+	public function jadwal() {
+		$list = $this->main_m->get('permohonan_izin', ['status_terakhir' => 'diterima', 'deleted_at' => NULL]);
+		$data = [];
+		foreach ($list as $key => $value) {
+			$data[$key] = [
+				'title' => $value->nama_usaha,
+				'url' => base_url('admin/lihat_antrian/').$value->id,
+				'start' => $value->tanggal_survey
+			];
+		}
+		parent::getView('admin/jadwal', ['antrian' => json_encode($data)]);
 	}
 }

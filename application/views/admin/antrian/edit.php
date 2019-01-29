@@ -106,7 +106,6 @@
                     <select name="status" class="form-control">
                         <option value="ditolak" <?=$izin->status_terakhir == 'ditolak' ? 'selected':''?>>Ditolak</option>
                         <option value="diterima" <?=$izin->status_terakhir == 'diterima' ? 'selected':''?>>Diterima</option>
-                        <option value="diproses" <?=$izin->status_terakhir == 'diproses' ? 'selected':''?>>Diproses</option>
                     </select>
                 </div>
             </div>
@@ -172,7 +171,8 @@ $( function() {
         defaultDate: "+1w",
         changeMonth: true,
         numberOfMonths: 1,
-        minDate: new Date(),
+        // minDate: new Date(),
+        minDate: new Date("<?=$min_date?>"),
         dateFormat: "yy-mm-dd"
     });
 });

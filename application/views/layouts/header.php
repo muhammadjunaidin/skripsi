@@ -53,6 +53,9 @@
                     <li>
                         <a href="<?=base_url('admin/jenis_usaha');?>"> <i class="menu-icon fa fa-file"></i>Jenis Usaha </a>
                     </li>
+                    <li>
+                        <a href="<?=base_url('admin/jadwal');?>"> <i class="menu-icon fa fa-calendar"></i>Jadwal Survey </a>
+                    </li>
                     <?php endif;?>
                     <li>
                         <a href="<?=base_url('admin/antrian');?>"> <i class="menu-icon fa fa-stack-overflow"></i>Antrian </a>

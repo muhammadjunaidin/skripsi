@@ -55,6 +55,14 @@ class Main_m extends CI_Model
         }
         return $result;
     }
+    public function get_row($table, $where) {
+        
+        $this->db->select('*');
+        $this->db->from($table);
+        $this->db->where($where);
+        return $this->db->get()->row();
+        
+    }
 
     function get($table,$where = null, $order = null, $limit = null, $group = null,$select = null){
 		if($where != null) $this->db->where($where);

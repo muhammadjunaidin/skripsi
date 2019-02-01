@@ -75,9 +75,13 @@ class Main_m extends CI_Model
 		return $query->result();
 	}
 
-    function get_antrian($where = null) {
-        if ($where != null)
+    function get_antrian($where = null, $or_where = null) {
+        if ($where != null) {
             $this->db->where($where);
+        }
+        if ($or_where != null){
+            $this->db->or_where($or_where);
+        }
         $this->db->select('permohonan_izin.*, jenis_usaha.nama');
         $this->db->where(['permohonan_izin.deleted_at' => NULL]);
         $this->db->join('jenis_usaha', 'jenis_usaha.id = permohonan_izin.id_izin_usaha');

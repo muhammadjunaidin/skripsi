@@ -56,6 +56,9 @@
                     <li>
                         <a href="<?=base_url('admin/jadwal');?>"> <i class="menu-icon fa fa-calendar"></i>Jadwal Survey </a>
                     </li>
+                    <li>
+                        <a href="<?=base_url('admin/antrian_lama');?>"> <i class="menu-icon fa fa-stack-overflow"></i>Antrian Diproses</a>
+                    </li>
                     <?php endif;?>
                     <li>
                         <a href="<?=base_url('admin/antrian');?>"> <i class="menu-icon fa fa-stack-overflow"></i>Antrian </a>

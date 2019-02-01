@@ -56,13 +56,14 @@
                             <td>
                                 <?php
                                     $hidden = false;
+                                    $disable = isset($disable) ? true : false;
                                     if(is_admin() && $pengajuan->status_terakhir === 'diproses' && $k !== 0 ) {
                                         $hidden = true;
                                     } else if (!is_admin() && $pengajuan->status_terakhir !== 'diproses') {
                                         $hidden = true;
                                     }
                                 ?>
-                                <a href="<?=base_url('admin/edit_antrian/').$pengajuan->id?>" class="btn btn-outline-primary <?= $hidden ? 'hidden':''?>">Edit</a>
+                                <a href="<?=base_url('admin/edit_antrian/').$pengajuan->id?>" class="btn btn-outline-primary <?= $hidden || $disable ? 'hidden':''?>">Edit</a>
                                 <a href="<?=base_url('admin/lihat_antrian/').$pengajuan->id?>" class="btn btn-outline-secondary">Lihat</a>
                                 <a href="<?=base_url('admin/hapus_antrian/').$pengajuan->id?>" class="btn btn-outline-danger">Hapus</a>
                             </td>

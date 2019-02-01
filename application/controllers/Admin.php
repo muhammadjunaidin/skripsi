@@ -134,6 +134,13 @@ class Admin extends BaseController {
 		parent::getView('admin/antrian/list', ['lists' => $lists]);
 	}
 
+	public function antrian_lama() {
+		$where = ['status_terakhir' => 'diterima'];
+		$or_where = ['status_terakhir' => 'ditolak'];
+		$lists = $this->main_m->get_antrian($where, $or_where);
+		parent::getView('admin/antrian/list', ['lists' => $lists, 'disable' => true ]);	
+	}
+
 	public function tambah_antrian() {
 		$jenis_usaha = $this->main_m->get('jenis_usaha');
 		parent::getView('admin/antrian/tambah', ['jenis_usaha' => $jenis_usaha]);	

@@ -180,7 +180,7 @@ class Admin extends BaseController {
             $insert = $this->main_m->insert('antrian', $antrian);
 			if($insert) {
 				$user = $this->user_model->get_user($permohonan_izin->user_id);
-				// parent::sendEmail($user, $permohonan_izin->kode_antrian, $this->input->post('status'), $this->input->post('tanggal_survey'));
+				parent::sendEmail($user, $permohonan_izin->kode_antrian, $this->input->post('status'), $this->input->post('tanggal_survey'));
 				$this->session->set_flashdata('alert', array('message' => 'Berhasil update izin usaha','class' => 'success'));
             	redirect('admin/antrian'); 
 			}

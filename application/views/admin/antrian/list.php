@@ -56,7 +56,7 @@
                             <td>
                                 <?php
                                     $hidden = false;
-                                    $disable = isset($disable) ? true : false;
+                                    $disable = isset($disable) && $disable? true : false;
                                     if(is_admin() && $pengajuan->status_terakhir === 'diproses' && $k !== 0 ) {
                                         $hidden = true;
                                     } else if (!is_admin() && $pengajuan->status_terakhir !== 'diproses') {

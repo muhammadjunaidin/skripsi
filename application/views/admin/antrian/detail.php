@@ -70,6 +70,14 @@
             </div>
             <div class="row form-group">
                 <div class="col col-md-3">
+                    <label for="berkas" class=" form-control-label">Berkas</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <a href="<?=base_url('/upload/berkas/').$izin->berkas ?>"><?= $izin->berkas ?></a>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
                     <label for="nama_izin" class="form-control-label">Tanggal berdiri</label>
                 </div>
                 <div class="col-12 col-md-9">

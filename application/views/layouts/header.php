@@ -44,7 +44,7 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="dashboard"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
+                        <a href="<?=base_url('admin/dashboard');?>"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <?php if($is_admin):?>
                     <li>

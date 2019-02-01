@@ -158,9 +158,33 @@ class Admin extends BaseController {
 			'status_terakhir' => 'diproses'
 		];
 
+
+		$berkas = $_FILES['berkas']['name'];
+        $ext = pathinfo($berkas, PATHINFO_EXTENSION);
+        $new_name = uniqid().'.'.$ext;
+
+		$config['upload_path']          = './upload/berkas';
+        $config['allowed_types']        = 'pdf|ppt|pptx|doc|docx';
+        $config['max_size']             = 150000;
+        $config['file_name']            = $new_name;
+
+        $this->load->library('upload', $config);
+
 		if($this->input->post('action') === 'edit') {
+			if($berkas !== "") {
+				$updateData['berkas'] = $new_name;
+        		if ( ! $this->upload->do_upload('berkas') )
+		        {
+		            $error = array('error' => $this->upload->display_errors());
+		            $this->session->set_flashdata('alert', array('message' => $this->upload->display_errors(),'class' => 'danger'));
+					redirect('admin/antrian'); 
+		        }
+        	} else {
+        		$updateData['berkas'] = $this->input->post('berkas_lama');
+        	}
+
 			$permohonan_izin = $this->main_m->get_row('permohonan_izin', ['id' => $this->input->post('id')]);
-			$updateData['status_terakhir'] = $this->input->post('status');
+			$updateData['status_terakhir'] = $this->input->post('status') === null ? "diproses":"";
 			$updateData['id'] = $this->input->post('id');
 			$updateData['updated_at'] = date('Y-m-d H:m:s');
 			$updateData['tanggal_survey'] = $this->input->post('tanggal_survey');
@@ -177,20 +201,34 @@ class Admin extends BaseController {
             	'created_at' => date('Y-m-d H:m:s')
             ];
             
-            $insert = $this->main_m->insert('antrian', $antrian);
-			if($insert) {
-				$user = $this->user_model->get_user($permohonan_izin->user_id);
-				parent::sendEmail($user, $permohonan_izin->kode_antrian, $this->input->post('status'), $this->input->post('tanggal_survey'));
-				$this->session->set_flashdata('alert', array('message' => 'Berhasil update izin usaha','class' => 'success'));
-            	redirect('admin/antrian'); 
-			}
+            if(is_admin()) {
+            	$insert = $this->main_m->insert('antrian', $antrian);
+            	if($insert) {
+					$user = $this->user_model->get_user($permohonan_izin->user_id);
+					// parent::sendEmail($user, $permohonan_izin->kode_antrian, $this->input->post('status'), $this->input->post('tanggal_survey'));
+					$this->session->set_flashdata('alert', array('message' => 'Berhasil update izin usaha','class' => 'success'));
+	            	redirect('admin/antrian'); 
+				}
+            } else {
+            	$this->session->set_flashdata('alert', array('message' => 'Berhasil update izin usaha','class' => 'success'));
+	            	redirect('admin/antrian'); 
+            }
+			
 		}
 
 		/*
 		* Status permohonan
 		* diproses, ditolak, diterima, selesai
 		*/
+		if ( ! $this->upload->do_upload('berkas') )
+        {
+            $error = array('error' => $this->upload->display_errors());
+            $this->session->set_flashdata('alert', array('message' => $this->upload->display_errors(),'class' => 'danger'));
+			redirect('admin/antrian'); 
+        }
+
 		$data['user_id'] = $userData['user_id'];
+		$data['berkas'] = $new_name;
 		$data['created_at'] = date('Y-m-d H:m:s');
 		$insert_id = $this->main_m->insert_id('permohonan_izin', $data);
 		if ($insert_id) {

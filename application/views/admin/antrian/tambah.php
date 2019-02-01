@@ -77,6 +77,14 @@
             </div>
             <div class="row form-group">
                 <div class="col col-md-3">
+                    <label for="berkas" class=" form-control-label">Berkas</label>
+                </div>
+                <div class="col-12 col-md-9">
+                    <input type="file" id="file-input" name="berkas" class="form-control-file">
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col col-md-3">
                     <label for="prosedur" class=" form-control-label">Permohonan Izin</label>
                 </div>
                 <div class="col-12 col-md-9">

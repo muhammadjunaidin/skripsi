@@ -20,6 +20,35 @@ class Admin extends BaseController {
 		parent::getView('admin/users/index', ['users' => $users]);
 	}
 
+	public function edit_user($id = null){
+		$userData = parent::userdata();
+		$user_id = $userData['user_id'];
+		$detail = $this->main_m->get_row('users', ['id' => $user_id]);
+		if($this->input->post('edit')) {
+			$updateData = [
+				'nik' => $this->input->post('nik'),
+				'email' => $this->input->post('email'),
+				'username' => $this->input->post('username'),
+				'nama_lengkap' => $this->input->post('nama_lengkap'),
+				'alamat' => $this->input->post('alamat'),
+				'no_tlp' => $this->input->post('no_tlp'),
+				'jabatan' => $this->input->post('jabatan'),
+				'kewarganegaraan' => $this->input->post('kewarganegaraan')
+			];
+			if($this->input->post('password') !== '') {
+				$updateData['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+			}
+			$update = $this->main_m->update('users', $updateData, ['id' => $user_id]);	
+			if($update) {
+				$this->session->set_flashdata('alert', array('message' => 'Berhasil update perushaan','class' => 'success'));
+			} else {
+				$this->session->set_flashdata('alert', array('message' => 'Gagal update perushaan','class' => 'danger'));
+			}
+			redirect('admin/edit_user'); 
+		}
+		parent::getView('admin/users/edit', ['user' => $detail]);
+	}
+
 	public function delete_user($id) {
 		$delete = $this->main_m->delete('users', ['id' => $id]);
 		if($delete['status']) {

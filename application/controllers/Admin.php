@@ -40,14 +40,40 @@ class Admin extends BaseController {
 			}
 			$update = $this->main_m->update('users', $updateData, ['id' => $user_id]);	
 			if($update) {
-				$this->session->set_flashdata('alert', array('message' => 'Berhasil update perushaan','class' => 'success'));
+				$this->session->set_flashdata('alert', array('message' => 'Berhasil update data','class' => 'success'));
 			} else {
-				$this->session->set_flashdata('alert', array('message' => 'Gagal update perushaan','class' => 'danger'));
+				$this->session->set_flashdata('alert', array('message' => 'Gagal update data','class' => 'danger'));
 			}
 			redirect('admin/edit_user'); 
 		}
 		parent::getView('admin/users/edit', ['user' => $detail]);
 	}
+
+	public function edit_admin($id = null){
+		$userData = parent::userdata();
+		$user_id = $userData['user_id'];
+		$detail = $this->main_m->get_row('admin', ['id' => $user_id]);
+		if($this->input->post('edit')) {
+			$updateData = [
+				'email' => $this->input->post('email'),
+				'username' => $this->input->post('username'),
+				'jenis_kelamin' => $this->input->post('jenis_kelamin'),
+				'nama' => $this->input->post('nama')
+			];
+			if($this->input->post('password') !== '') {
+				$updateData['password'] = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+			}
+			$update = $this->main_m->update('admin', $updateData, ['id' => $user_id]);	
+			if($update) {
+				$this->session->set_flashdata('alert', array('message' => 'Berhasil update data','class' => 'success'));
+			} else {
+				$this->session->set_flashdata('alert', array('message' => 'Gagal update data','class' => 'danger'));
+			}
+			redirect('admin/edit_admin'); 
+		}
+		parent::getView('admin/users/edit_admin', ['user' => $detail]);
+	}
+
 
 	public function delete_user($id) {
 		$delete = $this->main_m->delete('users', ['id' => $id]);

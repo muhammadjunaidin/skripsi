@@ -337,8 +337,15 @@ class Admin extends BaseController {
 	}
 
 	public function jadwal() {
-		$list = $this->main_m->get('permohonan_izin', ['status_terakhir' => 'diterima', 'deleted_at' => NULL]);
 		$data = [];
+		$tampil_kalendar = false;
+		$where = ['status_terakhir' => 'diterima', 'deleted_at' => NULL];
+		if(isset($_GET['ijin_usaha']) && $_GET['ijin_usaha']) {
+			$where['id_izin_usaha'] = $_GET['ijin_usaha'];
+			$tampil_kalendar = true;
+		}
+		$jenis_usaha = $this->main_m->get('jenis_usaha');
+		$list = $this->main_m->get('permohonan_izin', $where);
 		foreach ($list as $key => $value) {
 			$data[$key] = [
 				'title' => $value->nama_usaha,
@@ -346,6 +353,6 @@ class Admin extends BaseController {
 				'start' => $value->tanggal_survey
 			];
 		}
-		parent::getView('admin/jadwal', ['antrian' => json_encode($data)]);
+		parent::getView('admin/jadwal', ['antrian' => json_encode($data), 'tampil_kalendar'=>$tampil_kalendar, 'jenis_usaha'=>$jenis_usaha]);
 	}
 }

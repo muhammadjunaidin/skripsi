@@ -17,9 +17,9 @@
         }
       },
       header: {
-        left: 'prev,next today',
+        left: '',
         center: 'title',
-        right: ''
+        right: 'prev,next today'
       },
       defaultDate: '2019-01-12',
       navLinks: true, // can click day/week names to navigate views
@@ -35,15 +35,27 @@
 
 	.wrapper {
 		width: 800px;
-		margin: auto;
+		margin: 30px auto;
 	}
 
   #calendar {
     max-width: 900px;
-    margin: 0 auto;
   }
 
 </style>
 <div class="wrapper">
-	<div id='calendar'></div>
+  <div class="list-usaha" <?=isset($tampil_kalendar) && $tampil_kalendar?'style="display:none"':''?>>
+    <h3 style="padding-bottom:20px;">pilih jenis usaha</h3>  
+    <ul class="list-group">
+      <?php foreach($jenis_usaha as $k => $v){?>
+        <li class="list-group-item">
+          <a href="/perizinan/admin/jadwal?ijin_usaha=<?=$v->id?>"><?=$v->nama?></a>
+        </li>
+      <?php } ?>
+    </ul>
+  </div>
+  <div class="calendar-wrapper" <?=isset($tampil_kalendar) && !$tampil_kalendar?'style="display:none"':''?>>
+    <a href="/perizinan/admin/jadwal"><< kembali</a>
+	  <div id='calendar'></div>
+  </div>
 </div>
